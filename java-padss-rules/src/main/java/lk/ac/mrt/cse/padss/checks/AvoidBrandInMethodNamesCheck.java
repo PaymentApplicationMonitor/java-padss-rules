@@ -1,4 +1,4 @@
-package org.sonar.samples.java.checks;
+package lk.ac.mrt.cse.padss.checks;
 
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.JavaFileScanner;

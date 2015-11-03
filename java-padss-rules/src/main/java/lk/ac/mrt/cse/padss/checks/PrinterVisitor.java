@@ -3,7 +3,7 @@
  * All rights reserved
  * mailto:contact AT sonarsource DOT com
  */
-package org.sonar.samples.java.checks;
+package lk.ac.mrt.cse.padss.checks;
 
 import java.util.List;
 

@@ -5,7 +5,6 @@ import org.sonar.check.RuleProperty;
 import org.sonar.plugins.java.api.JavaFileScanner;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.*;
-import org.sonar.samples.java.checks.PrinterVisitor;
 
 import java.util.List;
 

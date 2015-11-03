@@ -1,4 +1,4 @@
-package org.sonar.samples.java.checks;
+package lk.ac.mrt.cse.padss.checks;
 
 import org.junit.Test;
 import org.sonar.java.checks.verifier.JavaCheckVerifier;

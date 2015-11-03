@@ -1,14 +1,14 @@
-package org.sonar.samples.java;
+package lk.ac.mrt.cse.padss;
 
 import java.util.Arrays;
 
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
-import org.sonar.samples.java.checks.AvoidAnnotationCheck;
-import org.sonar.samples.java.checks.AvoidBrandInMethodNamesCheck;
-import org.sonar.samples.java.checks.AvoidMethodDeclarationCheck;
-import org.sonar.samples.java.checks.MyCustomSubscriptionRule;
-import org.sonar.samples.java.checks.SecurityAnnotationMandatoryCheck;
+import lk.ac.mrt.cse.padss.checks.AvoidAnnotationCheck;
+import lk.ac.mrt.cse.padss.checks.AvoidBrandInMethodNamesCheck;
+import lk.ac.mrt.cse.padss.checks.AvoidMethodDeclarationCheck;
+import lk.ac.mrt.cse.padss.checks.MyCustomSubscriptionRule;
+import lk.ac.mrt.cse.padss.checks.SecurityAnnotationMandatoryCheck;
 
 /**
  * Provide the "checks" (implementations of rules) classes that are gonna be executed during
@@ -32,9 +32,9 @@ public class MyJavaFileCheckRegistrar implements CheckRegistrar {
    */
   public static Class<? extends JavaCheck>[] checkClasses() {
     return new Class[] {
-      SecurityAnnotationMandatoryCheck.class, 
-      MyCustomSubscriptionRule.class, 
-      AvoidAnnotationCheck.class, 
+      SecurityAnnotationMandatoryCheck.class,
+      MyCustomSubscriptionRule.class,
+      AvoidAnnotationCheck.class,
       AvoidMethodDeclarationCheck.class,
       AvoidBrandInMethodNamesCheck.class
       };
