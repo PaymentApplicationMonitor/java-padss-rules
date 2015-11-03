@@ -13,7 +13,7 @@ import java.util.List;
   name = "Avoid usage of annotation",
   description = "This rule detects usage of configured annotation",
   tags = {"example"})
-public class myTestCheck extends BaseTreeVisitor implements JavaFileScanner {
+public class MyTestCheck extends BaseTreeVisitor implements JavaFileScanner {
 
   private static final String DEFAULT_VALUE = "Inject";
 

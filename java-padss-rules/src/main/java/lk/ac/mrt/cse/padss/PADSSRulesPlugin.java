@@ -13,16 +13,16 @@ import java.util.List;
 /**
  * Entry point of plugin
  */
-public class MyJavaRulesPlugin extends SonarPlugin {
+public class PADSSRulesPlugin extends SonarPlugin {
 
   @Override
   public List getExtensions() {
     return Arrays.asList(
       // server extensions -> objects are instantiated during server startup
-      MyJavaRulesDefinition.class,
+      PADSSRulesDefinition.class,
 
       // batch extensions -> objects are instantiated during code analysis
-      MyJavaFileCheckRegistrar.class);
+      PADSSFileCheckRegistrar.class);
   }
 
 }

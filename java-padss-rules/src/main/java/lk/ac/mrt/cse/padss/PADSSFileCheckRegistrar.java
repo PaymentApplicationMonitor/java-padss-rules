@@ -1,8 +1,8 @@
 package lk.ac.mrt.cse.padss;
 
+import lk.ac.mrt.cse.padss.checks.MyTestCheck;
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
-import org.sonar.samples.java.checks.*;
 
 import java.util.Arrays;
 
@@ -12,7 +12,7 @@ import java.util.Arrays;
  *
  * This class is a batch extension by implementing the {@link CheckRegistrar} interface.
  */
-public class MyJavaFileCheckRegistrar implements CheckRegistrar {
+public class PADSSFileCheckRegistrar implements CheckRegistrar {
 
   /**
    * Register the classes that will be used to instantiate checks during analysis.
@@ -20,7 +20,7 @@ public class MyJavaFileCheckRegistrar implements CheckRegistrar {
   @Override
   public void register(RegistrarContext registrarContext) {
     // Call to registerClassesForRepository to associate the classes with the correct repository key
-    registrarContext.registerClassesForRepository(MyJavaRulesDefinition.REPOSITORY_KEY, Arrays.asList(checkClasses()), Arrays.asList(testCheckClasses()));
+    registrarContext.registerClassesForRepository(PADSSRulesDefinition.REPOSITORY_KEY, Arrays.asList(checkClasses()), Arrays.asList(testCheckClasses()));
   }
 
   /**
@@ -28,11 +28,7 @@ public class MyJavaFileCheckRegistrar implements CheckRegistrar {
    */
   public static Class<? extends JavaCheck>[] checkClasses() {
     return new Class[] {
-      SecurityAnnotationMandatoryCheck.class, 
-      MyCustomSubscriptionRule.class, 
-      AvoidAnnotationCheck.class, 
-      AvoidMethodDeclarationCheck.class,
-      AvoidBrandInMethodNamesCheck.class
+      MyTestCheck.class
       };
   }
 

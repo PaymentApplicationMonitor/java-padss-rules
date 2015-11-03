@@ -72,7 +72,7 @@
 				<version>1.12.1</version>
 				<extensions>true</extensions>
 				<configuration>
-					<pluginClass>org.sonar.samples.java.MyJavaRulesPlugin</pluginClass>
+					<pluginClass>lk.ac.mrt.cse.padss.PADSSRulesPlugin</pluginClass>
 				</configuration>
 			</plugin>
 
