@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.sonar.samples</groupId>
-	<artifactId>java-custom-rules</artifactId>
+	<groupId>lk.ac.mrt.cse</groupId>
+	<artifactId>java-padss-rules</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>sonar-plugin</packaging>
 
@@ -12,7 +12,7 @@
 		<java.plugin.version>3.6</java.plugin.version>
 	</properties>
 
-	<name>Java Custom Rules</name>
+	<name>Java PA-DSS Rules</name>
 	<description>Java custom rules</description>
 
 	<dependencies>
