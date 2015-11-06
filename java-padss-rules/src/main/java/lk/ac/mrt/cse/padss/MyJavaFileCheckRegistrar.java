@@ -2,13 +2,9 @@ package lk.ac.mrt.cse.padss;
 
 import java.util.Arrays;
 
+import lk.ac.mrt.cse.padss.checks.*;
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
-import lk.ac.mrt.cse.padss.checks.AvoidAnnotationCheck;
-import lk.ac.mrt.cse.padss.checks.AvoidBrandInMethodNamesCheck;
-import lk.ac.mrt.cse.padss.checks.AvoidMethodDeclarationCheck;
-import lk.ac.mrt.cse.padss.checks.MyCustomSubscriptionRule;
-import lk.ac.mrt.cse.padss.checks.SecurityAnnotationMandatoryCheck;
 
 /**
  * Provide the "checks" (implementations of rules) classes that are gonna be executed during
@@ -36,7 +32,8 @@ public class MyJavaFileCheckRegistrar implements CheckRegistrar {
       MyCustomSubscriptionRule.class,
       AvoidAnnotationCheck.class,
       AvoidMethodDeclarationCheck.class,
-      AvoidBrandInMethodNamesCheck.class
+      AvoidBrandInMethodNamesCheck.class,
+            HTTPCheck.class
       };
   }
 
