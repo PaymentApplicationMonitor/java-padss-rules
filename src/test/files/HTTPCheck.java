@@ -38,7 +38,7 @@ class AvoidAnnotationCheck {
   // HTTP GET request
   private void sendGet() throws Exception {
 
-    String url = "http://www.google.com/search?q=mkyong"; // Noncompliant {{Avoid using non secure urls http://www.google.com/search?q=mkyong}}
+    String url = "http://www.google.com/search?q=mkyong"; // Noncompliant {{Avoid using non-secure urls http://www.google.com/search?q=mkyong}}
 
     URL obj = new URL(url);
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
