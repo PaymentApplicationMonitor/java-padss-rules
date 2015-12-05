@@ -6,6 +6,7 @@ package lk.ac.mrt.cse.padss.checks;
 import com.google.common.collect.ImmutableList;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
+import org.sonar.check.RuleProperty;
 import org.sonar.java.checks.SubscriptionBaseVisitor;
 import org.sonar.java.model.expression.AssignmentExpressionTreeImpl;
 import org.sonar.java.model.expression.IdentifierTreeImpl;
@@ -31,12 +32,22 @@ import java.util.Map;
 
 public class VariableEndCheck extends SubscriptionBaseVisitor {
 
-  private static final String DEFAULT_CLASS_NAME = "padssDataObject";
+  private static final String DEFAULT_CLASS_NAME = "padssDataObjec";
   private static final String DEFAULT_METHOD_NAME = "discard";
 
 
   private List<String> secureObjects = new ArrayList<>();
   private Map<String, IdentifierTreeImpl> lastUsed = new HashMap<>();
+
+    @RuleProperty(
+            defaultValue = DEFAULT_CLASS_NAME,
+            description = "Name of the class which use to save secure data")
+    protected String className;
+
+    @RuleProperty(
+            defaultValue = DEFAULT_METHOD_NAME,
+            description = "Name of the method implement to discard data")
+    protected String discardMethodName;
 
   @Override
   public List<Kind> nodesToVisit() {
@@ -54,14 +65,14 @@ public class VariableEndCheck extends SubscriptionBaseVisitor {
 
         if(expression.is(Kind.ASSIGNMENT)){
           IdentifierTreeImpl assign= (IdentifierTreeImpl) ((AssignmentExpressionTreeImpl) expression).variable();
-          if(DEFAULT_CLASS_NAME.equals(assign.symbolType().name())){
+          if(className.equals(assign.symbolType().name())){
             addSecureObject(assign);
           }
         }else {
           ExpressionTree expressionClass = ((MemberSelectExpressionTreeImpl) ((MethodInvocationTreeImpl) expression).methodSelect()).expression();
-          if(DEFAULT_CLASS_NAME.equals(expressionClass.symbolType().name())){
+          if(className.equals(expressionClass.symbolType().name())){
               String methodName = ((MemberSelectExpressionTreeImpl) ((MethodInvocationTreeImpl) expression).methodSelect()).identifier().name();
-            if(DEFAULT_METHOD_NAME.equals(methodName)){
+            if(discardMethodName.equals(methodName)){
               removeSecureObject((IdentifierTreeImpl) expressionClass);
             }else {
                 updateLastUsed((IdentifierTreeImpl) expressionClass);

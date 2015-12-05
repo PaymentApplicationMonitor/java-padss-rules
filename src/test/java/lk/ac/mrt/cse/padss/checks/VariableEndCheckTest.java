@@ -11,6 +11,8 @@ public class VariableEndCheckTest {
     public void detected() {
 
         VariableEndCheck check = new VariableEndCheck();
+        check.className="padssDataObject";
+        check.discardMethodName="discard";
 
         JavaCheckVerifier.verify("src/test/files/padssDataObject.java", check);
     }
