@@ -5,6 +5,7 @@ import org.sonar.plugins.java.api.JavaFileScanner;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.java.api.tree.LiteralTree;
+import org.sonar.squidbridge.annotations.ActivatedByDefault;
 
 import java.util.regex.Pattern;
 
@@ -12,8 +13,9 @@ import java.util.regex.Pattern;
         key = "AvoidNon-SecureURLs",
         name = "Avoid usage of non-secure URLs",
         description = "This rule detects usage of non-secure URLs",
-        tags = {"PA-DSS"})
-public class HTTPCheck extends BaseTreeVisitor implements JavaFileScanner{
+        tags = {"pa-dss"})
+@ActivatedByDefault
+public class HTTPCheck extends BaseTreeVisitor implements JavaFileScanner {
 
     private static final String DEFAULT_FORMAT = "^(http?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
     public String format = DEFAULT_FORMAT;
@@ -28,16 +30,16 @@ public class HTTPCheck extends BaseTreeVisitor implements JavaFileScanner{
         }
         this.context = context;
         scan(context.getTree());
-
-        System.out.println(PrinterVisitor.print(context.getTree()));
     }
+
     @Override
     public void visitLiteral(LiteralTree tree) {
-        String temp = tree.value().substring(1, tree.value().length() - 1);
-        if (pattern.matcher(temp).matches()) {
-            context.addIssue(tree, this, String.format("Avoid using non-secure urls %s", temp));
+        if (tree.value().length() > 3) {
+            String temp = tree.value().substring(1, tree.value().length() - 1);
+            if (pattern.matcher(temp).matches()) {
+                context.addIssue(tree, this, String.format("Avoid using non-secure urls %s", temp));
+            }
         }
-
         super.visitLiteral(tree);
     }
 }
