@@ -2,10 +2,11 @@ package lk.ac.mrt.cse.padss.checks;
 
 import com.google.common.collect.ImmutableList;
 import org.sonar.check.Rule;
-import org.sonar.java.checks.SubscriptionBaseVisitor;
 import org.sonar.java.model.LiteralUtils;
+import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
 import org.sonar.plugins.java.api.tree.*;
 import org.sonar.plugins.java.api.tree.Tree.Kind;
+import org.sonar.squidbridge.annotations.ActivatedByDefault;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -15,9 +16,10 @@ import java.util.regex.Pattern;
         key = "Hard-codedPasswords",
         name = "Passwords should not be hard-coded",
         description = "This rule detects the presence of hard coded passwords in the source",
-        tags = {"PA-DSS"})
+        tags = {"pa-dss"})
+@ActivatedByDefault
 
-public class HardCodedCredentialsCheck extends SubscriptionBaseVisitor {
+public class HardCodedCredentialsCheck extends IssuableSubscriptionVisitor {
 
     private static final Pattern PASSWORD_LITERAL_PATTERN = Pattern.compile("(password|passwd|pwd)=..", Pattern.CASE_INSENSITIVE);
     private static final Pattern PASSWORD_VARIABLE_PATTERN = Pattern.compile("(password|passwd|pwd)", Pattern.CASE_INSENSITIVE);
