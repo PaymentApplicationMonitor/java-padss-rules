@@ -8,12 +8,14 @@ import org.sonar.java.checks.methods.TypeCriteria;
 import org.sonar.plugins.java.api.tree.ExpressionTree;
 import org.sonar.plugins.java.api.tree.MethodInvocationTree;
 import org.sonar.plugins.java.api.tree.Tree;
+import org.sonar.squidbridge.annotations.ActivatedByDefault;
 
 @Rule(
         key = "SQLInjection",
         name = "Values passed to SQL commands should be sanitized",
         description = "This rule will check for any non-sanitized variables to be passed to database",
-        tags = {"PA-DSS"})
+        tags = {"pa-dss"})
+@ActivatedByDefault
 
 public class SQLInjectionCheck extends AbstractInjectionChecker {
 
