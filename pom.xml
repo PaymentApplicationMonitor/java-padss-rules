@@ -16,6 +16,7 @@
 	<description>Java custom rules</description>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.codehaus.sonar</groupId>
 			<artifactId>sonar-plugin-api</artifactId>
@@ -28,8 +29,10 @@
 			<artifactId>sonar-java-plugin</artifactId>
 			<type>sonar-plugin</type>
 			<version>${java.plugin.version}</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.sonarsource.java</groupId>
@@ -37,6 +40,13 @@
 			<version>${java.plugin.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.sonar</groupId>
+			<artifactId>sonar-java-api</artifactId>
+			<version>5.1</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.codehaus.sonar.sslr</groupId>
@@ -62,6 +72,7 @@
 			<version>0.9.30</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>

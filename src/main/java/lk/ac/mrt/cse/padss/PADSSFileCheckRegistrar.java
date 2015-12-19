@@ -1,6 +1,6 @@
 package lk.ac.mrt.cse.padss;
 
-import lk.ac.mrt.cse.padss.checks.MyTestCheck;
+import lk.ac.mrt.cse.padss.checks.*;
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
 
@@ -28,7 +28,9 @@ public class PADSSFileCheckRegistrar implements CheckRegistrar {
    */
   public static Class<? extends JavaCheck>[] checkClasses() {
     return new Class[] {
-      MyTestCheck.class
+            HTTPCheck.class,
+            VariableEndCheck.class,
+            HardCodedCredentialsCheck.class
       };
   }
 
