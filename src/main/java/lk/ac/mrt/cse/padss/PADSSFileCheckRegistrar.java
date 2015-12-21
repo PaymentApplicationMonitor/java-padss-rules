@@ -30,7 +30,8 @@ public class PADSSFileCheckRegistrar implements CheckRegistrar {
     return new Class[] {
             HTTPCheck.class,
             VariableEndCheck.class,
-            HardCodedCredentialsCheck.class
+            HardCodedCredentialsCheck.class,
+            SecureObjectToStringCheck.class
       };
   }
 
