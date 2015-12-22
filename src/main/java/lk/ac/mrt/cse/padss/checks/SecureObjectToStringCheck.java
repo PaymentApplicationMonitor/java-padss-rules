@@ -11,24 +11,18 @@ import org.sonar.plugins.java.api.tree.*;
 import org.sonar.plugins.java.api.tree.Tree.Kind;
 import org.sonar.squidbridge.annotations.ActivatedByDefault;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Rule(
-        key = "SecureDataDiscarding",
-        name = "Secure Objects should discard at the end",
-        description = "This rule will check whether data is discarded properly before garbage collection",
+        key = "SecureObjectShouldNotConvertToString",
+        name = "Secure Objects should not convert toString",
+        description = "This rule will check whether secure object convert to string",
         tags = {"pa-dss"})
 @ActivatedByDefault
 public class SecureObjectToStringCheck extends IssuableSubscriptionVisitor {
 
     private static final String DEFAULT_CLASS_NAME = "padssDataObject";
-    private static final String DEFAULT_METHOD_NAME = "discard";
-
-    private List<String> secureObjects = new ArrayList<>();
-    private Map<String, IdentifierTree> lastUsed = new HashMap<>();
+    private static final String DEFAULT_METHOD_NAME = "toString";
 
     @RuleProperty(
             defaultValue = DEFAULT_CLASS_NAME,
@@ -38,64 +32,28 @@ public class SecureObjectToStringCheck extends IssuableSubscriptionVisitor {
     @RuleProperty(
             defaultValue = DEFAULT_METHOD_NAME,
             description = "Name of the method implement to discard data")
-    protected String discardMethodName;
+    protected String disallowedMethodName;
 
     @Override
     public List<Kind> nodesToVisit() {
-        return ImmutableList.of(
-                Kind.EXPRESSION_STATEMENT, Kind.COMPILATION_UNIT);
+        return ImmutableList.of(Kind.METHOD_INVOCATION);
     }
 
     @Override
-    public void leaveNode(Tree tree) {
-        if (tree.is(Kind.EXPRESSION_STATEMENT)) {
-            ExpressionStatementTree expressionStatement = (ExpressionStatementTree) tree;
-            ExpressionTree expression = expressionStatement.expression();
-            if (expression.is(Kind.ASSIGNMENT)) {
-                if (((AssignmentExpressionTree) expression).variable().is(Kind.IDENTIFIER)) {
-                    IdentifierTree assign = (IdentifierTree) ((AssignmentExpressionTree) expression).variable();
-                    if (className.equals(assign.symbolType().name())) {
-                        addSecureObject(assign);
-                    }
-                }
-            } else if (expression.is(Kind.METHOD_INVOCATION)) {
-                if (((MethodInvocationTree) expression).methodSelect().is(Kind.MEMBER_SELECT)) {
-                    ExpressionTree expressionClass = ((MemberSelectExpressionTree) ((MethodInvocationTree) expression).methodSelect()).expression();
-                    if (className.equals(expressionClass.symbolType().name())) {
-                        String methodName = ((MemberSelectExpressionTree) ((MethodInvocationTree) expression).methodSelect()).identifier().name();
-                        if (discardMethodName.equals(methodName)) {
-                            removeSecureObject((IdentifierTree) expressionClass);
-                        } else {
-                            updateLastUsed((IdentifierTree) expressionClass);
-                        }
-                    }
+    public void visitNode(Tree tree) {
+        MethodInvocationTree methodTree = (MethodInvocationTree) tree;
+
+        if (((MethodInvocationTree) tree).methodSelect().is(Kind.MEMBER_SELECT)) {
+            ExpressionTree expressionClass = ((MemberSelectExpressionTree) ((MethodInvocationTree) tree).methodSelect()).expression();
+            if (className.equals(expressionClass.symbolType().name())) {
+                String methodName = ((MemberSelectExpressionTree) ((MethodInvocationTree) tree).methodSelect()).identifier().name();
+                //
+                if (disallowedMethodName.equals(methodName)) {
+                    this.addIssue(methodTree,"toString Method not allowed for secure object");
                 }
             }
         }
-        if (tree.is(Kind.COMPILATION_UNIT)) {
-            this.checkNonCompliance();
-        }
-        super.leaveNode(tree);
-    }
-
-    private void addSecureObject(IdentifierTree tree) {
-        secureObjects.add(tree.symbol().name());
-        lastUsed.put(tree.symbol().name(), tree);
-    }
-
-    private void removeSecureObject(IdentifierTree tree) {
-        secureObjects.remove(tree.symbol().name());
-        lastUsed.remove(tree.symbol().name());
-    }
-
-    private void checkNonCompliance() {
-        for (String objectName : secureObjects) {
-            addIssue(lastUsed.get(objectName), "Discard " + objectName + " object at the end");
-        }
-    }
-
-    private void updateLastUsed(IdentifierTree tree) {
-        lastUsed.replace(tree.symbol().name(), tree);
+        super.visitNode(tree);
     }
 
 

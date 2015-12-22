@@ -10,10 +10,10 @@ public class SecureObjectToStringCheckTest {
     @Test
     public void detected() {
 
-        VariableEndCheck check = new VariableEndCheck();
+        SecureObjectToStringCheck check = new SecureObjectToStringCheck();
         check.className="padssDataObject";
-        check.discardMethodName="discard";
+        check.disallowedMethodName ="toString";
 
-        JavaCheckVerifier.verify("src/test/files/padssDataObject.java", check);
+        JavaCheckVerifier.verify("src/test/files/SecureObjectToString.java", check);
     }
 }
