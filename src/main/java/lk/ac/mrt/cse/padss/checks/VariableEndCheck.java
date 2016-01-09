@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package lk.ac.mrt.cse.padss.checks;
 
 import com.google.common.collect.ImmutableList;

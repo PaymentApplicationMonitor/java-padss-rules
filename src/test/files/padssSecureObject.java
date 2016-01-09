@@ -69,6 +69,10 @@ class padssDataObject {
         return s+"dss"; // Noncompliant {{}}
     }
 
+    private String getDATA(){
+        return s;
+    }
+
 
 
 }

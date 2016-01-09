@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package lk.ac.mrt.cse.padss.checks;
 
 import com.google.common.collect.ImmutableList;
@@ -17,9 +15,9 @@ import org.sonar.squidbridge.annotations.ActivatedByDefault;
 import java.util.List;
 
 @Rule(
-        key = "SecureObjectShouldNotConvertToString",
-        name = "Secure Objects should not convert toString",
-        description = "This rule will check whether secure object convert to string",
+        key = "CanNotUseSQLMethodsInSecureObject",
+        name = "Secure Objects should not save data to database",
+        description = "This rule will check whether secure object save data to database",
         tags = {"pa-dss"})
 @ActivatedByDefault
 public class SQLMethodsInSecureObjectCheck extends IssuableSubscriptionVisitor {
@@ -104,17 +102,10 @@ public class SQLMethodsInSecureObjectCheck extends IssuableSubscriptionVisitor {
                             if (isHibernateCall || isExecuteQueryOrPrepareStatement(methodInvocationTree) || isEntityManagerCreateNativeQuery(methodInvocationTree)) {
                                 addIssue(methodInvocationTree, "SQL methods not allowed in secure Object");
                             }
-                            if (isEntityManagerCreateNativeQuery(methodInvocationTree)){
-                                System.out.println();
-                            }
-                            if (isExecuteQueryOrPrepareStatement(methodInvocationTree)){
-                                System.out.println();
-                            }
-                            System.out.println();
+
                         }
 
                     }
-                    System.out.println();
                 }
             }
         }

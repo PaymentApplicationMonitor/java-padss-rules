@@ -8,6 +8,7 @@ import org.sonar.java.checks.methods.TypeCriteria;
 import org.sonar.plugins.java.api.tree.ExpressionTree;
 import org.sonar.plugins.java.api.tree.MethodInvocationTree;
 import org.sonar.plugins.java.api.tree.Tree;
+import org.sonar.java.checks.AbstractInjectionChecker;
 import org.sonar.squidbridge.annotations.ActivatedByDefault;
 
 @Rule(

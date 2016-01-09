@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package lk.ac.mrt.cse.padss.checks;
 
 import com.google.common.collect.ImmutableList;
@@ -16,9 +14,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @Rule(
-        key = "SecureObjectShouldNotConvertToString",
-        name = "Secure Objects should not convert toString",
-        description = "This rule will check whether secure object convert to string",
+        key = "SecureObjectShouldNotReturnVariables",
+        name = "Secure Objects should not return secure variables",
+        description = "This rule will check whether secure object return variable values",
         tags = {"pa-dss"})
 @ActivatedByDefault
 public class SecureObjectMethodsCheck extends IssuableSubscriptionVisitor {
@@ -42,20 +40,24 @@ public class SecureObjectMethodsCheck extends IssuableSubscriptionVisitor {
             List<Tree> membersList = classTree.members();
             for (Tree t : membersList) {
                 if (t.is(Kind.METHOD)) {
+                    boolean isPrivateMethod=false;
                     MethodTree methodTree = (MethodTree) t;
+                    if(methodTree.modifiers().size() >0){
 
-                    if (hasPANDataReturnValuve(methodTree)) {
+                        if(methodTree.modifiers().get(0).is(Kind.TOKEN)){
+                            ModifierKeywordTree mKTree = (ModifierKeywordTree) methodTree.modifiers().get(0);
+                            if(mKTree.modifier().name().equals("PRIVATE")){
+                                isPrivateMethod =true;
+                            }
+                        }
+                    }
+                    if (hasPANDataReturnValuve(methodTree) && !isPrivateMethod) {
                         String message = "you cannot return variable value from secure object";
                         this.addIssue(methodTree.block().body().get(methodTree.block().body().size() - 1), message);
                     }
-                    TypeTree temp;
-                    temp = methodTree.returnType();
-                    //if(temp.is())
-                    System.out.println();
                 }
             }
         }
-        System.out.println();
         super.visitNode(tree);
     }
 
@@ -68,16 +70,11 @@ public class SecureObjectMethodsCheck extends IssuableSubscriptionVisitor {
                     return false;
                 }
                 if (returnTree.expression().is(Kind.IDENTIFIER)) {
-
                     return isDynamicVariable((IdentifierTree) returnTree.expression());
                 }
-
                 if (returnTree.expression().is(Kind.PLUS)) {
-
                     return isDynamicString((BinaryExpressionTree) returnTree.expression());
                 }
-
-
             }
             return false;
         } else {
@@ -102,11 +99,9 @@ public class SecureObjectMethodsCheck extends IssuableSubscriptionVisitor {
         if (binaryExpressionTree.rightOperand().is(Kind.IDENTIFIER)) {
             isRightDynamic = isDynamicVariable((IdentifierTree) binaryExpressionTree.rightOperand());
         }
-
         if (isLeftDynamic || isRightDynamic) {
             return true;
         }
-
         return false;
     }
 

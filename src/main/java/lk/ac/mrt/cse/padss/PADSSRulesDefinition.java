@@ -1,8 +1,4 @@
-/*
- * Copyright (C) 2009-2014 SonarSource SA
- * All rights reserved
- * mailto:contact AT sonarsource DOT com
- */
+
 package lk.ac.mrt.cse.padss;
 
 import org.sonar.api.server.rule.RulesDefinition;
